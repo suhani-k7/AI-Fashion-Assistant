@@ -30,7 +30,20 @@ function App() {
           onChange={(e)=> setImage(e.target.files[0])}
           required
         />
-        <br /><br />       
+        {/*uploaded image preview logic*/}
+        {image && (
+          <div>
+            <br />
+            <img
+              src={URL.createObjectURL(image)}
+              alt="preview"
+              width="200"
+            />
+          </div>
+        )}
+
+        <br /><br />
+
         <input
           type="number"
           placeholder="Enter budget"
