@@ -6,21 +6,22 @@ import './App.css'
 function App() {
   const [image,setImage]=useState(null);
   const [budget, setBudget]=useState("");
+  const [result, setResult]=useState([]);
+
   const handleSubmit=async(e)=>{
     e.preventDefault();
-    const formData=new FormData();
-    formData.append("image",image);
-    formData.append("budget",budget);
-    try{
-      const res=await axios.post(
-        "http://localhost:8000/upload",
-        formData
-      );
-      console.log(res.data);
-    }catch (err){
-      console.error(err);
-    }
-  }
+    setResult([]);
+    setTimeout(()=>{
+      const fakeData=[
+        "White T-shirt",
+        "Blue Jeans",
+        "Snkeaers"
+      ];
+
+      setResult(fakeData);
+    },2200);
+  };
+
   return(
     <div style={{padding:"20px"}}>
       <h1>AI FASHION ASSISTANT</h1>
@@ -54,6 +55,14 @@ function App() {
         <br /><br />
         <button type="submit">Upload</button>
       </form>
+        {result.length>0 &&(
+           <div>
+            <h2> Detected Items: </h2>
+            { result.map((item,index)=>(
+              <p key={index}>{item}</p>
+            ))}
+      </div>
+      )}
     </div>
   );
 }
