@@ -10,16 +10,15 @@ function App() {
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
-    setResult([]);
-    setTimeout(()=>{
-      const fakeData=[
-        "White T-shirt",
-        "Blue Jeans",
-        "Snkeaers"
-      ];
-
-      setResult(fakeData);
-    },2200);
+    const formData=new FormData();
+    formData.append("image", image);
+    formData.append("budget", budget);
+    const res = await axios.post(
+      "http://localhost:8000/upload",
+      formData
+    );
+    console.log(res.data);
+    setResult(res.data.labels);
   };
 
   return(

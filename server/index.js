@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -21,41 +22,37 @@ app.post("/upload", upload.single("image"), async (req, res) => {
       encoding: "base64",
     });
 
-const response = await axios.post(
-  "https://api.clarifai.com/v2/models/general-image-recognition/outputs",
-  {
-    user_app_id: {
-      user_id: "3bmcvs8o1vt8",
-      app_id: "main",
-    },
-    inputs: [
-      {
-        data: {
+  const response = await axios.post(
+    `https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_VISION_API_KEY}`,
+    {
+      requests: [
+        {
           image: {
-            base64: imgbytes,
+            content: imgbytes,
           },
+          features: [
+            {
+              type: "LABEL_DETECTION",
+              maxResults: 5,
+            },
+          ],
         },
-      },
-    ],
-  },
-  {
-    headers: {
-      Authorization: "Key 08861459382648e28ad8bb9c2d15a1c8",
-      "Content-Type": "application/json",
-    },
-  }
-);
+      ],
+    }
+  );
 
-    const concepts =
-      response.data.outputs[0].data.concepts.map((c) => c.name);
+  const labels =
+    response.data.responses[0].labelAnnotations.map(
+      (item) => item.description
+    );
 
-    console.log("Detected labels:", concepts);
+  console.log("Detected labels:", labels);
 
-    res.json({
-      message: "AI processed image",
-      labels: concepts,
-    });
-  } catch (error) {
+  res.json({
+    message: "AI processed image",
+    labels: labels,
+  });
+} catch (error) {
     console.error("ERROR:", error.response?.data || error);
     res.status(500).json({ error: "AI Processing FAILED" });
   }
