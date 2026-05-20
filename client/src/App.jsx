@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import axios from "axios";
+import products from "./data/products";
 
 import './App.css'
 
 function App() {
+  console.log(products);
   const [image,setImage]=useState(null);
   const [budget, setBudget]=useState("");
   const [result, setResult]=useState([]);
