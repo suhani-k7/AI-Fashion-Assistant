@@ -5,10 +5,12 @@ import products from "./data/products";
 import './App.css'
 
 function App() {
-  console.log(products);
   const [image,setImage]=useState(null);
   const [budget, setBudget]=useState("");
   const [result, setResult]=useState([]);
+  const matchedProducts=products.filter((product)=>
+  result.includes(product.category) && product.price<=Number(budget)
+  )
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
@@ -64,6 +66,21 @@ function App() {
             ))}
       </div>
       )}
+      {matchedProducts.length>0 &&(
+        <div>
+          <h2>Recommended Products:</h2>
+          {matchedProducts.map((product)=>(
+            <div key={product.id}>
+              <img src={product.image}
+              alt={product.name}
+              width="150"
+              />
+              <p>{product.name}</p>
+              <p>₹{product.price}</p>
+            </div>
+        ))}
+      </div>
+    )}
     </div>
   );
 }

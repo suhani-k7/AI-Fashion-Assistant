@@ -22,7 +22,7 @@ const products=[
         price: 2499,
         image:
         "https://imgs.search.brave.com/UujOc2n6iZuZGqkp5SC1CxqkaISGtu2on54ogEZys_Q/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFZZVNvTmEtUkwu/anBn",
-    }
+    },
     {
         id: 4,
         name: "Red T-Shirt",
